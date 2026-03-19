@@ -101,7 +101,7 @@ class OnboardingScreen extends StatelessWidget {
                   vertical: 8.0,
                 ),
                 child: Text(
-                  AppStrings.onBoardingDesc,
+                  AppStrings.onBoardingDesc1,
                   textAlign: .start,
                   style: TextStyle(fontSize: 18.sp, fontFamily: 'Lato'),
                 ),

@@ -3,6 +3,7 @@ import 'package:travel_safe/core/constants/app_colors.dart';
 import 'package:travel_safe/core/constants/app_images.dart';
 import 'package:travel_safe/core/constants/app_strings.dart';
 import 'package:travel_safe/views/screen/onboarding_screen.dart';
+import 'package:travel_safe/views/screen/onboarding.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -24,7 +25,7 @@ class _SplashscreenState extends State<Splashscreen> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (_) => OnboardingScreen()
+            builder: (_) => Onboarding()
         )
     );
   }

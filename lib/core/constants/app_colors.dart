@@ -10,4 +10,7 @@ class AppColors {
   static const Color white = Colors.white;
   static const Color black = Colors.black87;
 
+  // Home Screen
+  static const Color orange = Color.fromRGBO(226, 145, 50, 1);
+
 }
