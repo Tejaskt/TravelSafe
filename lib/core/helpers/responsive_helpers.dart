@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+/*
+*  need a Responsive helper class that do  scale on every device
+*   like here i only specify all istable ismobile isfoldable or isportrait and is landscap
+*   all for sp , hight, width, and padding. so in code i just have to access this (h,w,sp,padding) only
+*   no manualle condition like is tablet is potraitn or is foldable.
+*
+* */
+
 class ResponsiveHelpers {
   ResponsiveHelpers._();
 
@@ -44,7 +52,7 @@ class ResponsiveHelpers {
         ? mediaQuery(context).shortestSide
         : mediaQuery(context).width;
     final scale = side / baseWidth;
-    final cappedScale = isTablet(context) ? scale.clamp(0.0, 1.3) : scale;
+    final cappedScale = isTabletLandscape(context) ? scale.clamp(0.0, 1.3) : scale;
     return px * cappedScale;
   }
 
@@ -56,7 +64,7 @@ class ResponsiveHelpers {
       vertical: mediaQuery(context).shortestSide * 0.02,
     )
         : EdgeInsets.symmetric(
-      horizontal: w(context, 12),
+      horizontal: w(context, 20),
       vertical: h(context, 20),
     );
   }

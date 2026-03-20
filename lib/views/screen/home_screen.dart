@@ -5,6 +5,8 @@ import 'package:travel_safe/core/constants/app_colors.dart';
 import 'package:travel_safe/core/constants/app_images.dart';
 import 'package:travel_safe/core/constants/app_strings.dart';
 
+import '../../core/helpers/responsive_helpers.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -13,56 +15,75 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double w(double px) => ResponsiveHelpers.w(context, px);
+    double h(double px) => ResponsiveHelpers.h(context, px);
+    double sp(double px) => ResponsiveHelpers.sp(context, px);
+    bool isTablet = ResponsiveHelpers.isTablet(context);
+    bool isTabletLandScape = ResponsiveHelpers.isTabletLandscape(context);
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        selectedIconTheme: IconThemeData(color: AppColors.primary),
+        unselectedIconTheme: IconThemeData(color: AppColors.black),
         backgroundColor: Colors.transparent,
-        onTap: (value) {},
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
         selectedItemColor: AppColors.blue,
         items: [
           BottomNavigationBarItem(
-            icon: Image.asset(AppImages.home),
+            icon: Icon(Icons.home),
             label: AppStrings.home,
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(AppImages.message),
+            icon: Icon(Icons.email_rounded),
             label: AppStrings.chat,
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(AppImages.calender),
+            icon: Icon(Icons.calendar_month),
             label: AppStrings.schedule,
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(AppImages.favorite),
+            icon: Icon(Icons.favorite),
             label: AppStrings.saved,
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(AppImages.profile),
+            icon: Icon(Icons.person_2),
             label: AppStrings.profile,
           ),
         ],
       ),
+
       backgroundColor: AppColors.white,
+
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+            padding: ResponsiveHelpers.screenPadding(context),
             child: Column(
               crossAxisAlignment: .start,
               children: [
-
                 Row(
                   children: [
                     CircleAvatar(backgroundImage: AssetImage(AppImages.avatar)),
-                    Padding(
-                      padding: EdgeInsets.only(left: 2.w),
-                      child: Text(
-                        AppStrings.userName,
-                        style: TextStyle(fontFamily: 'Lato', fontSize: 18.sp),
-                      ),
+                    SizedBox(width: w(8)),
+
+                    Text(
+                      AppStrings.userName,
+                      style: TextStyle(fontFamily: 'Lato', fontSize: sp(18)),
                     ),
+
                     Spacer(),
+
                     Card(
                       shape: CircleBorder(),
                       color: AppColors.white,
@@ -82,28 +103,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
 
-                SizedBox(height: 10),
+                SizedBox(height: h(10)),
 
                 Text(
                   AppStrings.heading1,
                   style: TextStyle(
                     fontFamily: 'Lato',
-                    fontSize: 22.sp,
+                    fontSize: sp(24),
                     fontWeight: .w600,
                     color: AppColors.black,
                   ),
                 ),
+
                 Text(
                   AppStrings.heading2,
                   style: TextStyle(
                     fontFamily: 'Lato',
-                    fontSize: 22.sp,
+                    fontSize: sp(24),
                     fontWeight: .w600,
                     color: AppColors.orange,
                   ),
                 ),
 
-                SizedBox(height: 15),
+                SizedBox(height: h(20)),
 
                 IntrinsicHeight(
                   child: Row(
@@ -122,7 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                      SizedBox(width: 3.w),
+                      SizedBox(width: w(20)),
+
                       Card(
                         shape: CircleBorder(),
                         color: AppColors.white,
@@ -132,67 +155,82 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
 
-                SizedBox(height: 8),
+                SizedBox(height: h(16)),
 
-                smallHeadings(AppStrings.visit),
+                smallHeadings(AppStrings.visit, context),
 
-                SizedBox(height: 8),
+                SizedBox(height: h(16)),
 
                 SizedBox(
-                  height: 10.h,
+                  height: sp(100),
                   child: ListView.builder(
                     scrollDirection: .horizontal,
                     itemCount: AppStrings.cityName.length,
                     itemBuilder: (context, index) =>
-                        cityView(AppStrings.cityName[index]),
+                        cityView(AppStrings.cityName[index], context),
                   ),
                 ),
 
+                SizedBox(height: h(10)),
+
                 Row(
                   children: [
-                    smallHeadings(AppStrings.popularDestination),
+                    smallHeadings(AppStrings.popularDestination, context),
                     Spacer(),
                     Text(
                       AppStrings.seeAll,
                       style: TextStyle(
                         fontFamily: 'Lato',
                         color: AppColors.blue,
+                        fontSize: sp(14)
                       ),
                     ),
                   ],
                 ),
 
-                SizedBox(height: 10),
+                SizedBox(height: h(14)),
 
                 SingleChildScrollView(
                   scrollDirection: .horizontal,
                   child: Row(
-                    spacing: 20,
                     children: [
-                      popularDestinationCard(AppImages.maldives,AppStrings.cardTitle1,AppStrings.address1,4.6),
-                      popularDestinationCard(AppImages.erinFalls,AppStrings.cardTitle2,AppStrings.address2,3),
+                      popularDestinationCard(
+                        AppImages.maldives,
+                        AppStrings.cardTitle1,
+                        AppStrings.address1,
+                        4.6,
+                        context
+                      ),
+                      SizedBox(width: w(12)),
+                      popularDestinationCard(
+                        AppImages.erinFalls,
+                        AppStrings.cardTitle2,
+                        AppStrings.address2,
+                        3,
+                        context
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
 
+                SizedBox(height: h(35)),
 
-                SizedBox(height: 15),
                 Row(
                   children: [
-                    smallHeadings(AppStrings.category),
+                    smallHeadings(AppStrings.category, context),
                     Spacer(),
                     Text(
                       AppStrings.seeAll,
                       style: TextStyle(
                         fontFamily: 'Lato',
                         color: AppColors.blue,
+                        fontSize: sp(14)
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
 
+                SizedBox(height: h(24)),
 
                 Row(
                   mainAxisAlignment: .spaceAround,
@@ -210,16 +248,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget popularDestinationCard(String img, String title, String location, double rating) {
+Widget popularDestinationCard(
+  String img,
+  String title,
+  String location,
+  double rating,
+    BuildContext context
+) {
   return Container(
-    height: 200,
-    width: 200,
+    height: ResponsiveHelpers.h(context, 200),
+    width: ResponsiveHelpers.w(context, 200),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30),
-      image: DecorationImage(
-        image: AssetImage(img),
-        fit: .cover,
-      ),
+      image: DecorationImage(image: AssetImage(img), fit: .cover),
     ),
     child: Stack(
       children: [
@@ -248,10 +289,10 @@ Widget popularDestinationCard(String img, String title, String location, double 
                 // Title
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Lato',
                     color: Colors.white,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                   ),
                 ),
 
@@ -267,9 +308,9 @@ Widget popularDestinationCard(String img, String title, String location, double 
                     Expanded(
                       child: Text(
                         location,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white70,
-                          fontSize: 10,
+                          fontSize: 10.sp,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -282,9 +323,7 @@ Widget popularDestinationCard(String img, String title, String location, double 
                   children: [
                     ...List.generate(5, (index) {
                       return Icon(
-                        index < rating.floor()
-                            ? Icons.star
-                            : Icons.star_border,
+                        index < rating.floor() ? Icons.star : Icons.star_border,
                         color: Colors.amber,
                         size: 12,
                       );
@@ -292,9 +331,9 @@ Widget popularDestinationCard(String img, String title, String location, double 
                     const SizedBox(width: 4),
                     Text(
                       rating.toString(),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 10,
+                        fontSize: 10.sp,
                         fontWeight: .w600,
                       ),
                     ),
@@ -334,21 +373,24 @@ Widget categoryView(String img, String name) {
   );
 }
 
-Widget smallHeadings(String txt) {
+Widget smallHeadings(String txt, BuildContext context) {
   return Text(
     txt,
-    style: TextStyle(fontFamily: 'Lato', fontWeight: .w600, fontSize: 18.sp),
+    style: TextStyle(
+      fontFamily: 'Lato',
+      fontWeight: .w600,
+      fontSize: ResponsiveHelpers.sp(context, 18),
+    ),
   );
 }
 
-Widget cityView(Map<String, String> value) {
+Widget cityView(Map<String, String> value, BuildContext context) {
   return Column(
     mainAxisAlignment: .center,
-    spacing: 5,
     children: [
       Container(
-        height: 60,
-        width: 90,
+        height: ResponsiveHelpers.sp(context, 65),
+        width: ResponsiveHelpers.sp(context, 90),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(value['image']!),
@@ -357,7 +399,13 @@ Widget cityView(Map<String, String> value) {
           shape: .circle,
         ),
       ),
-      Text(value['city']!, style: TextStyle(fontFamily: 'Lato')),
+      Text(
+        value['city']!,
+        style: TextStyle(
+          fontFamily: 'Lato',
+          fontSize: ResponsiveHelpers.sp(context, 14),
+        ),
+      ),
     ],
   );
 }

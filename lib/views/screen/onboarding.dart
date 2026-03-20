@@ -28,8 +28,6 @@ class _OnboardingState extends State<Onboarding> {
   Widget build(BuildContext context) {
     double w(double px) => ResponsiveHelpers.w(context, px);
     double h(double px) => ResponsiveHelpers.h(context, px);
-    double sp(double px) => ResponsiveHelpers.sp(context, px);
-    bool isTablet = ResponsiveHelpers.isTablet(context);
     bool isTabletLandScape = ResponsiveHelpers.isTabletLandscape(context);
 
     return Scaffold(
@@ -202,7 +200,6 @@ class _OnboardingState extends State<Onboarding> {
 Widget onboardingData(BuildContext context, Map<String, String> item) {
   double w(double px) => ResponsiveHelpers.w(context, px);
   double h(double px) => ResponsiveHelpers.h(context, px);
-  double sp(double px) => ResponsiveHelpers.sp(context, px);
   bool isTabletLandScape = ResponsiveHelpers.isTabletLandscape(context);
 
   return isTabletLandScape

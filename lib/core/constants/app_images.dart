@@ -25,13 +25,8 @@ class AppImages {
   static const String erinFalls = 'assets/images/editedfalls.png';
   static const String beach = 'assets/images/beach.png';
   static const String mountain = 'assets/images/mountain.png';
-  static const String calender = 'assets/images/calendar.png';
   static const String bell = 'assets/images/icon_bell.png';
-  static const String favorite = 'assets/images/icon_favorite.png';
   static const String filter = 'assets/images/icon_filter.png';
-  static const String home = 'assets/images/icon_home.png';
-  static const String message = 'assets/images/icon_message.png';
-  static const String profile = 'assets/images/icon_profile.png';
   static const String setting = 'assets/images/setting.png';
   static const String arrowIcon = 'assets/images/arrowicon.svg';
 
