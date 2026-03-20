@@ -28,8 +28,8 @@ class AppImages {
   static const String sydney = 'assets/images/sydney.png';
   static const String toronto = 'assets/images/toronto.png';
   static const String london = 'assets/images/london.png';
-  static const String maldives = 'assets/images/maldives.png';
-  static const String erinFalls = 'assets/images/erinfalls.png';
+  static const String maldives = 'assets/images/editedmaldives.png';
+  static const String erinFalls = 'assets/images/editedfalls.png';
   static const String beach = 'assets/images/beach.png';
   static const String mountain = 'assets/images/mountain.png';
   static const String calender = 'assets/images/calendar.png';
@@ -40,5 +40,6 @@ class AppImages {
   static const String message = 'assets/images/icon_message.png';
   static const String profile = 'assets/images/icon_profile.png';
   static const String setting = 'assets/images/setting.png';
+  static const String arrowIcon = 'assets/images/arrowicon.svg';
 
 }

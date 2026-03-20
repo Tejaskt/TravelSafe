@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:travel_safe/core/constants/app_colors.dart';
 import 'package:travel_safe/core/constants/app_images.dart';
@@ -214,117 +215,96 @@ Widget popularDestinationCard(String img, String title, String location, double 
     height: 200,
     width: 200,
     decoration: BoxDecoration(
-      color: Colors.blue,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(30),
+      image: DecorationImage(
+        image: AssetImage(img),
+        fit: .cover,
+      ),
     ),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Stack(
-        children: [
+    child: Stack(
+      children: [
+        // top-right arrow icon
+        Positioned(
+          top: 20,
+          right: 14,
+          child: SvgPicture.asset(AppImages.arrowIcon),
+        ),
 
-          //Background Image
-          Positioned.fill(
-            child: Image.asset(
-              img,
-              fit: BoxFit.cover,
+        // bottom text  + rating
+        Positioned(
+          bottom: 10,
+          left: 20,
+          right: 10,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.4),
+              borderRadius: BorderRadius.circular(30),
             ),
-          ),
-
-          //Bottom dark gradient overlay
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.7),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // Top-right arrow icon
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.8),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.arrow_outward,
-                size: 16,
-                color: Colors.black,
-              ),
-            ),
-          ),
-
-          // Bottom text + rating
-          Positioned(
-            bottom: 10,
-            left: 10,
-            right: 10,
+            padding: EdgeInsets.only(left: 14, top: 4, bottom: 4),
             child: Column(
+              spacing: 1,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 // Title
                 Text(
                   title,
                   style: const TextStyle(
+                    fontFamily: 'Lato',
                     color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
                   ),
                 ),
-                const SizedBox(height: 3),
 
                 // Location row
                 Row(
                   children: [
-                    const Icon(Icons.location_on, color: Colors.white, size: 12),
+                    const Icon(
+                      Icons.location_on,
+                      color: Colors.white,
+                      size: 12,
+                    ),
                     const SizedBox(width: 3),
                     Expanded(
                       child: Text(
                         location,
-                        style: const TextStyle(color: Colors.white70, fontSize: 11),
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 10,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
 
                 // Star rating row
                 Row(
                   children: [
                     ...List.generate(5, (index) {
                       return Icon(
-                        index < rating.floor() ? Icons.star : Icons.star_border,
+                        index < rating.floor()
+                            ? Icons.star
+                            : Icons.star_border,
                         color: Colors.amber,
-                        size: 14,
+                        size: 12,
                       );
                     }),
                     const SizedBox(width: 4),
                     Text(
                       rating.toString(),
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: .w600,
+                      ),
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
-
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }

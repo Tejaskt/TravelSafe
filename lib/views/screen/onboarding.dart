@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:travel_safe/core/constants/app_data.dart';
 import 'package:travel_safe/views/screen/home_screen.dart';
-
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
 import '../../core/constants/app_strings.dart';
@@ -97,16 +96,16 @@ class _OnboardingState extends State<Onboarding> {
               mainAxisAlignment: .center,
               children: List.generate(
                 AppData.onboardingData.length,
-                    (index) => AnimatedContainer(
+                  (index) => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   margin: EdgeInsets.symmetric(horizontal: 4),
-                  width: _currentPage == index ? 20 : 8,
-                  //  active dot is wider
-                  height: 8,
+                  width: 20, //_currentPage == index ? 20 : 8,
+                  height: 4,
                   decoration: BoxDecoration(
-                    color: _currentPage == index
+                    color:
+                    index <= _currentPage
                         ? AppColors.primary
-                        : Colors.grey.shade400,
+                        : Colors.blue.shade200 ,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
