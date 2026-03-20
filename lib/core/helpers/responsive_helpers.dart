@@ -21,7 +21,7 @@ class ResponsiveHelpers {
 
   // ─── Width scaling ─────────────────────────────
   static double w(BuildContext context, double px) {
-    const baseWidth = 375.0;
+    const baseWidth = 400.0;
     final side = isTablet(context)
         ? mediaQuery(context).shortestSide
         : mediaQuery(context).width;
@@ -30,7 +30,7 @@ class ResponsiveHelpers {
 
   // ─── Height scaling ────────────────────────────
   static double h(BuildContext context, double px) {
-    const baseHeight = 812.0;
+    const baseHeight = 850.0;
     final side = isTablet(context)
         ? mediaQuery(context).shortestSide
         : mediaQuery(context).height;
@@ -39,7 +39,7 @@ class ResponsiveHelpers {
 
   // ─── Font / Icon scaling ───────────────────────
   static double sp(BuildContext context, double px) {
-    const baseWidth = 375.0;
+    const baseWidth = 400.0;
     final side = isTablet(context)
         ? mediaQuery(context).shortestSide
         : mediaQuery(context).width;

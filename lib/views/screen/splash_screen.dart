@@ -21,7 +21,7 @@ class _SplashscreenState extends State<Splashscreen> {
   }
   
   void checkLogin() async{
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 3));
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(

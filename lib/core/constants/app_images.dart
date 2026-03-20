@@ -7,18 +7,11 @@ class AppImages {
   static const String location = 'assets/images/location.png';
 
   // Onboarding Screen
-  static const String img1 = 'assets/images/signupimg1.png';
-  static const String img2 = 'assets/images/signupimg2.png';
-  static const String img3 = 'assets/images/signupimg3.png';
-  static const String ob2i1 = 'assets/images/onb2i1.png';
-  static const String ob2i2 = 'assets/images/onb2i2.png';
-  static const String ob2i3 = 'assets/images/onb2i3.png';
-  static const String ob3i1 = 'assets/images/onb3i1.png';
-  static const String ob3i2 = 'assets/images/onb3i2.png';
-  static const String ob3i3 = 'assets/images/onb3i3.png';
-  static const String img4 = 'assets/images/signupimg4.png';
-  static const String dot1 = 'assets/images/line1.png';
-  static const String dot2 = 'assets/images/line2.png';
+  static const String onboardingImg1 = 'assets/images/onboardImg1.png';
+  static const String onboardingImg2 = 'assets/images/onboardImg2.png';
+  static const String onboardingImg3 = 'assets/images/onboardImg3.png';
+  static const String img4 = 'assets/images/txt_background.png';
+
 
 
   // Home Screen

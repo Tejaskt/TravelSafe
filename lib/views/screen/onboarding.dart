@@ -5,6 +5,7 @@ import 'package:travel_safe/views/screen/home_screen.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
 import '../../core/constants/app_strings.dart';
+import '../../core/helpers/responsive_helpers.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -23,37 +24,24 @@ class _OnboardingState extends State<Onboarding> {
     super.dispose();
   }
 
-  void _onNextTap() {
-    if (_currentPage < AppData.onboardingData.length - 1) {
-      _pageController.nextPage(
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    } else {
-      _goToHome();
-    }
-  }
-
-  void _goToHome() {
-    Navigator.of(
-      context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => HomeScreen()));
-  }
-
   @override
   Widget build(BuildContext context) {
-    //final isLastPage = _currentPage == AppData.onboardingData.length - 1;
+    double w(double px) => ResponsiveHelpers.w(context, px);
+    double h(double px) => ResponsiveHelpers.h(context, px);
+    double sp(double px) => ResponsiveHelpers.sp(context, px);
+    bool isTablet = ResponsiveHelpers.isTablet(context);
+    bool isTabletLandScape = ResponsiveHelpers.isTabletLandscape(context);
 
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
-        child: Column(
-          children: [
+        child: Padding(
+          padding: ResponsiveHelpers.screenPadding(context),
 
-            Align(
-              alignment: .topRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: 6.w, top: 3.h),
+          child: Column(
+            children: [
+              Align(
+                alignment: .topRight,
                 child: TextButton(
                   onPressed: () {
                     Navigator.pushReplacement(
@@ -72,82 +60,139 @@ class _OnboardingState extends State<Onboarding> {
                   ),
                 ),
               ),
-            ),
 
-            SizedBox(height: 2.h),
+              SizedBox(height: 2.sp),
 
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: AppData.onboardingData.length,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  final item = AppData.onboardingData[index];
-                  return onboardingData(context, item);
-                },
+              Expanded(
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: AppData.onboardingData.length,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentPage = index;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    final item = AppData.onboardingData[index];
+                    return onboardingData(context, item);
+                  },
+                ),
               ),
-            ),
 
-            Row(
-              mainAxisAlignment: .center,
-              children: List.generate(
-                AppData.onboardingData.length,
+              SizedBox(height: 20),
+
+              Row(
+                mainAxisAlignment: .center,
+                children: List.generate(
+                  AppData.onboardingData.length,
                   (index) => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: EdgeInsets.symmetric(horizontal: 4),
-                  width: 20, //_currentPage == index ? 20 : 8,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color:
-                    index <= _currentPage
-                        ? AppColors.primary
-                        : Colors.blue.shade200 ,
-                    borderRadius: BorderRadius.circular(4),
+                    duration: const Duration(milliseconds: 300),
+                    margin: EdgeInsets.symmetric(horizontal: w(4)),
+                    width: w(20),
+                    height: h(4),
+                    decoration: BoxDecoration(
+                      color: index <= _currentPage
+                          ? AppColors.primary
+                          : Colors.blue.shade200,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: SizedBox(
-                width: 75.w,
-                height: 5.h,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                  ),
-                  child: Text(
-                    AppStrings.btnLogin,
-                    style: TextStyle(color: AppColors.white),
-                  ),
-                ),
-              ),
-            ),
+              SizedBox(height: 20),
 
-            SizedBox(
-              width: 75.w,
-              height: 5.h,
+              !isTabletLandScape
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w(16)),
+                      child: Column(
+                        crossAxisAlignment: .stretch,
+                        mainAxisAlignment: .spaceAround,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                            ),
+                            child: Text(
+                              AppStrings.btnLogin,
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
 
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(color: AppColors.primary),
-                  elevation: 0,
-                  backgroundColor: AppColors.white,
-                ),
-                child: Text(
-                  AppStrings.btnCreateAccount,
-                  style: TextStyle(color: AppColors.black),
-                ),
-              ),
-            ),
-          ],
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              side: BorderSide(
+                                color: AppColors.primary,
+                                width: 1.5,
+                              ),
+                              elevation: 0,
+                              backgroundColor: AppColors.white,
+                            ),
+                            child: Text(
+                              AppStrings.btnCreateAccount,
+                              style: TextStyle(
+                                color: AppColors.black,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Row(
+                      mainAxisAlignment: .spaceAround,
+                      children: [
+                        Spacer(),
+                        Expanded(
+                          flex: 2,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                            ),
+                            child: Text(
+                              AppStrings.btnLogin,
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        Spacer(),
+
+                        Expanded(
+                          flex: 2,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              side: BorderSide(
+                                color: AppColors.primary,
+                                width: 1.5,
+                              ),
+                              elevation: 0,
+                              backgroundColor: AppColors.white,
+                            ),
+                            child: Text(
+                              AppStrings.btnCreateAccount,
+                              style: TextStyle(
+                                color: AppColors.black,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -155,67 +200,101 @@ class _OnboardingState extends State<Onboarding> {
 }
 
 Widget onboardingData(BuildContext context, Map<String, String> item) {
-  return SingleChildScrollView(
-    child: Column(
-      children: [
+  double w(double px) => ResponsiveHelpers.w(context, px);
+  double h(double px) => ResponsiveHelpers.h(context, px);
+  double sp(double px) => ResponsiveHelpers.sp(context, px);
+  bool isTabletLandScape = ResponsiveHelpers.isTabletLandscape(context);
 
-        SizedBox(
-          height: 47.h,
-          child: Stack(
-            children: [
-              Row(
-                mainAxisAlignment: .spaceEvenly,
-                children: [
-                  Image.asset(item['img1']!),
-                  Image.asset(item['img2']!),
-                ],
-              ),
+  return isTabletLandScape
+      ? Row(
+          mainAxisAlignment: .spaceAround,
+          children: [
+            SizedBox(
+              height: .infinity,
+              child: Image.asset(item['img']!, fit: .fitHeight),
+            ),
 
-              Align(
-                alignment: .bottomCenter,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+            Column(
+              spacing: h(5),
+              mainAxisAlignment: .center,
+              crossAxisAlignment: .center,
+              children: [
+                Text(
+                  item['txt1']!,
+                  style: TextStyle(fontFamily: 'JBold', fontSize: 24.sp),
+                ),
+
+                Stack(
+                  alignment: .center,
                   children: [
-                    Image.asset(width: 270, item['img3']!),
                     SizedBox(
-                      width: 270,
-                      child: Text(
-                        item['txt1']!,
-                        style: TextStyle(fontFamily: 'JBold', fontSize: 24.sp),
+                      height: h(60),
+                      width: w(180),
+                      child: Image.asset(AppImages.img4, fit: .cover),
+                    ),
+                    Text(
+                      item['txt2']!,
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 22.sp,
+                        fontFamily: 'JBold',
                       ),
                     ),
                   ],
                 ),
+
+                SizedBox(
+                  width: w(300),
+                  child: Text(
+                    item['desc']!,
+                    textAlign: .start,
+                    style: TextStyle(fontSize: 18.sp, fontFamily: 'Lato'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )
+      : SingleChildScrollView(
+          child: Column(
+            children: [
+
+              Image.asset(item['img']!),
+              SizedBox(height: h(10)),
+              Text(
+                item['txt1']!,
+                style: TextStyle(fontFamily: 'JBold', fontSize: 24.sp),
+              ),
+
+              Stack(
+                alignment: .center,
+                children: [
+                  Image.asset(AppImages.img4),
+                  Text(
+                    item['txt2']!,
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 22.sp,
+                      fontFamily: 'JBold',
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: h(10)),
+
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: w(48),
+                  vertical: h(8),
+                ),
+                child: Text(
+                  item['desc']!,
+                  textAlign: .start,
+                  style: TextStyle(fontSize: 18.sp, fontFamily: 'Lato'),
+                ),
               ),
             ],
           ),
-        ),
-
-        Stack(
-          alignment: .center,
-          children: [
-            Image.asset(AppImages.img4),
-            Text(
-              item['txt2']!,
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 22.sp,
-                fontFamily: 'JBold',
-              ),
-            ),
-          ],
-        ),
-
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 8.0),
-          child: Text(
-            item['desc']!,
-            textAlign: .start,
-            style: TextStyle(fontSize: 18.sp, fontFamily: 'Lato'),
-          ),
-        ),
-
-      ],
-    ),
-  );
+        );
 }
