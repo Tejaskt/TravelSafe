@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 *   like here i only specify all istable ismobile isfoldable or isportrait and is landscap
 *   all for sp , hight, width, and padding. so in code i just have to access this (h,w,sp,padding) only
 *   no manualle condition like is tablet is potraitn or is foldable.
-*
 * */
 
 class ResponsiveHelpers {
