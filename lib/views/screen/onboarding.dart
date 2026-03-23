@@ -200,6 +200,7 @@ class _OnboardingState extends State<Onboarding> {
 Widget onboardingData(BuildContext context, Map<String, String> item) {
   double w(double px) => ResponsiveHelpers.w(context, px);
   double h(double px) => ResponsiveHelpers.h(context, px);
+  double sp(double px) => ResponsiveHelpers.sp(context, px);
   bool isTabletLandScape = ResponsiveHelpers.isTabletLandscape(context);
 
   return isTabletLandScape
@@ -208,7 +209,8 @@ Widget onboardingData(BuildContext context, Map<String, String> item) {
           children: [
             SizedBox(
               height: .infinity,
-              child: Image.asset(item['img']!, fit: .fitHeight),
+              width: w(300),
+              child: Image.asset(item['img']!, fit: .fill),
             ),
 
             Column(
@@ -218,7 +220,7 @@ Widget onboardingData(BuildContext context, Map<String, String> item) {
               children: [
                 Text(
                   item['txt1']!,
-                  style: TextStyle(fontFamily: 'JBold', fontSize: 24.sp),
+                  style: TextStyle(fontFamily: 'JBold', fontSize: sp(24)),
                 ),
 
                 Stack(
@@ -227,13 +229,13 @@ Widget onboardingData(BuildContext context, Map<String, String> item) {
                     SizedBox(
                       height: h(60),
                       width: w(180),
-                      child: Image.asset(AppImages.img4, fit: .cover),
+                      child: Image.asset(AppImages.img4, fit: .fill),
                     ),
                     Text(
                       item['txt2']!,
                       style: TextStyle(
                         color: AppColors.white,
-                        fontSize: 22.sp,
+                        fontSize: sp(22),
                         fontFamily: 'JBold',
                       ),
                     ),
@@ -241,11 +243,11 @@ Widget onboardingData(BuildContext context, Map<String, String> item) {
                 ),
 
                 SizedBox(
-                  width: w(300),
+                  width: w(200),
                   child: Text(
                     item['desc']!,
                     textAlign: .start,
-                    style: TextStyle(fontSize: 18.sp, fontFamily: 'Lato'),
+                    style: TextStyle(fontSize: sp(18), fontFamily: 'Lato'),
                   ),
                 ),
               ],

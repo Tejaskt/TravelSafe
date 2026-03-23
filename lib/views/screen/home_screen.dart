@@ -4,6 +4,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:travel_safe/core/constants/app_colors.dart';
 import 'package:travel_safe/core/constants/app_images.dart';
 import 'package:travel_safe/core/constants/app_strings.dart';
+import 'package:travel_safe/views/screen/booking_screen.dart';
 
 import '../../core/helpers/responsive_helpers.dart';
 
@@ -28,8 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
     double w(double px) => ResponsiveHelpers.w(context, px);
     double h(double px) => ResponsiveHelpers.h(context, px);
     double sp(double px) => ResponsiveHelpers.sp(context, px);
-    bool isTablet = ResponsiveHelpers.isTablet(context);
-    bool isTabletLandScape = ResponsiveHelpers.isTabletLandscape(context);
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -182,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontFamily: 'Lato',
                         color: AppColors.blue,
-                        fontSize: sp(14)
+                        fontSize: sp(14),
                       ),
                     ),
                   ],
@@ -194,20 +193,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: .horizontal,
                   child: Row(
                     children: [
-                      popularDestinationCard(
-                        AppImages.maldives,
-                        AppStrings.cardTitle1,
-                        AppStrings.address1,
-                        4.6,
-                        context
+
+                      GestureDetector(
+                        onTap : (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => BookingScreen(name: 'The Nautilus \nMaldives')));
+                        },
+                        child: popularDestinationCard(
+                          AppImages.maldives,
+                          AppStrings.cardTitle1,
+                          AppStrings.address1,
+                          4.6,
+                          context,
+                        ),
                       ),
+
                       SizedBox(width: w(12)),
-                      popularDestinationCard(
-                        AppImages.erinFalls,
-                        AppStrings.cardTitle2,
-                        AppStrings.address2,
-                        3,
-                        context
+
+                      GestureDetector(
+                        onTap : (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => BookingScreen(name: AppStrings.cardTitle2)));
+                        },
+                        child: popularDestinationCard(
+                          AppImages.erinFalls,
+                          AppStrings.cardTitle2,
+                          AppStrings.address2,
+                          3,
+                          context,
+                        ),
                       ),
                     ],
                   ),
@@ -224,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontFamily: 'Lato',
                         color: AppColors.blue,
-                        fontSize: sp(14)
+                        fontSize: sp(14),
                       ),
                     ),
                   ],
@@ -253,7 +269,7 @@ Widget popularDestinationCard(
   String title,
   String location,
   double rating,
-    BuildContext context
+  BuildContext context,
 ) {
   return Container(
     height: ResponsiveHelpers.h(context, 200),
@@ -394,7 +410,7 @@ Widget cityView(Map<String, String> value, BuildContext context) {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(value['image']!),
-            fit: .cover,
+            fit: .fill,
           ),
           shape: .circle,
         ),

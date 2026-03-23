@@ -16,11 +16,11 @@ class AppImages {
 
   // Home Screen
   static const String avatar = 'assets/images/avatar.png';
-  static const String abuja = 'assets/images/abuja.png';
-  static const String newYork = 'assets/images/newyork.png';
-  static const String sydney = 'assets/images/sydney.png';
-  static const String toronto = 'assets/images/toronto.png';
-  static const String london = 'assets/images/london.png';
+  static const String abuja = 'assets/images/abuja100.png';
+  static const String newYork = 'assets/images/newyork100.png';
+  static const String sydney = 'assets/images/sydney100.png';
+  static const String toronto = 'assets/images/toronto100.png';
+  static const String london = 'assets/images/london100.png';
   static const String maldives = 'assets/images/editedmaldives.png';
   static const String erinFalls = 'assets/images/editedfalls.png';
   static const String beach = 'assets/images/beach.png';
@@ -30,4 +30,9 @@ class AppImages {
   static const String setting = 'assets/images/setting.png';
   static const String arrowIcon = 'assets/images/arrowicon.svg';
 
+
+  // Details Screen
+  static const String maldivesDetails = 'assets/images/maldivesDetails.png';
+  static const String clockIcon ='assets/images/clockIcon.png';
+  static const String ratingIcon ='assets/images/ratingIcon.png';
 }

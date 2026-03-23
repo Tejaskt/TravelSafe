@@ -60,4 +60,13 @@ class AppStrings {
   static const String schedule = 'Schedule';
   static const String saved = 'Saved';
   static const String profile = 'Profile';
+  
+  // Details Screen
+  static const String maldivesDetails = 'The Nautilus is a privately-owned luxury resort in the Baa atoll UNESCO biosphere reserve, near Hanifaru Bay where you can swim with manta rays in season. This natural island has its own outstanding coral reef just metres from its beaches.';
+  static const String bookNow = 'Book Now';
+  static const String moreDetails = 'More Details';
+  static const String duration = 'Duration';
+  static const String ratingDetails = 'RATING';
+  static const String overview = 'Overview';
+
 }

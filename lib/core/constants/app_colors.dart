@@ -13,4 +13,7 @@ class AppColors {
   // Home Screen
   static const Color orange = Color.fromRGBO(226, 145, 50, 1);
 
+  // Details Screen
+  static const Color grey = Colors.grey;
+
 }
