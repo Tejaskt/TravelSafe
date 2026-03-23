@@ -58,7 +58,7 @@ class BookingScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              '\$85/Day',
+                              AppStrings.rate,
                               style: TextStyle(
                                 fontFamily: 'Lato',
                                 fontWeight: .w600,
@@ -96,7 +96,7 @@ class BookingScreen extends StatelessWidget {
                                 ),
 
                                 Text(
-                                  '3 Days',
+                                  AppStrings.stay,
                                   style: TextStyle(
                                     fontFamily: 'Lato',
                                     fontWeight: .w600,
@@ -131,7 +131,7 @@ class BookingScreen extends StatelessWidget {
                                   spacing: 8,
                                   children: [
                                     Text(
-                                      '5.0',
+                                      AppStrings.starts,
                                       style: TextStyle(
                                         fontFamily: 'Lato',
                                         fontWeight: .w600,
@@ -139,7 +139,7 @@ class BookingScreen extends StatelessWidget {
                                     ),
 
                                     Text(
-                                      '(2.9k Reviews)',
+                                      AppStrings.reviews,
                                       style: TextStyle(
                                         fontFamily: 'Lato',
                                         fontWeight: .w600,

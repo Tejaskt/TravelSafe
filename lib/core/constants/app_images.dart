@@ -12,8 +12,6 @@ class AppImages {
   static const String onboardingImg3 = 'assets/images/onboardImg3.png';
   static const String img4 = 'assets/images/txt_background.png';
 
-
-
   // Home Screen
   static const String avatar = 'assets/images/avatar.png';
   static const String abuja = 'assets/images/abuja100.png';
@@ -29,7 +27,6 @@ class AppImages {
   static const String filter = 'assets/images/icon_filter.png';
   static const String setting = 'assets/images/setting.png';
   static const String arrowIcon = 'assets/images/arrowicon.svg';
-
 
   // Details Screen
   static const String maldivesDetails = 'assets/images/maldivesDetails.png';

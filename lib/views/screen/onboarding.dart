@@ -257,9 +257,10 @@ Widget onboardingData(BuildContext context, Map<String, String> item) {
       : SingleChildScrollView(
           child: Column(
             children: [
-
               Image.asset(item['img']!),
+
               SizedBox(height: h(10)),
+
               Text(
                 item['txt1']!,
                 style: TextStyle(fontFamily: 'JBold', fontSize: 24.sp),

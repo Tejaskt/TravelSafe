@@ -5,7 +5,6 @@ import 'package:travel_safe/core/constants/app_colors.dart';
 import 'package:travel_safe/core/constants/app_images.dart';
 import 'package:travel_safe/core/constants/app_strings.dart';
 import 'package:travel_safe/views/screen/booking_screen.dart';
-
 import '../../core/helpers/responsive_helpers.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -91,13 +90,33 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Image.asset(AppImages.setting),
                       ),
                     ),
-                    Card(
-                      shape: CircleBorder(),
-                      color: AppColors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(AppImages.bell),
-                      ),
+
+                    Stack(
+                      children: [
+                        Card(
+                          shape: CircleBorder(),
+                          color: AppColors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(AppImages.bell),
+                          ),
+                        ),
+
+                        Positioned(
+                          right: 0,
+                          child: CircleAvatar(
+                            maxRadius: 8,
+                            backgroundColor: AppColors.primary,
+                            child: Text('5',style:
+                              TextStyle(
+                                color: AppColors.white,
+                                fontFamily: 'Lato',
+                                fontSize: 10
+                              ),),
+                          ),
+                        ),
+
+                      ],
                     ),
                   ],
                 ),
@@ -192,13 +211,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 SingleChildScrollView(
                   scrollDirection: .horizontal,
                   child: Row(
+                    spacing: w(12),
                     children: [
-
                       GestureDetector(
-                        onTap : (){
+                        onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => BookingScreen(name: 'The Nautilus \nMaldives')));
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BookingScreen(
+                                name: 'The Nautilus \nMaldives',
+                              ),
+                            ),
+                          );
                         },
                         child: popularDestinationCard(
                           AppImages.maldives,
@@ -209,13 +233,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                      SizedBox(width: w(12)),
-
                       GestureDetector(
-                        onTap : (){
+                        onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => BookingScreen(name: AppStrings.cardTitle2)));
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  BookingScreen(name: AppStrings.cardTitle2),
+                            ),
+                          );
                         },
                         child: popularDestinationCard(
                           AppImages.erinFalls,
@@ -224,6 +250,46 @@ class _HomeScreenState extends State<HomeScreen> {
                           3,
                           context,
                         ),
+                      ),
+
+                      popularDestinationCard(
+                        AppImages.maldives,
+                        AppStrings.cardTitle1,
+                        AppStrings.address1,
+                        4.6,
+                        context,
+                      ),
+
+                      popularDestinationCard(
+                        AppImages.erinFalls,
+                        AppStrings.cardTitle2,
+                        AppStrings.address2,
+                        3,
+                        context,
+                      ),
+
+                      popularDestinationCard(
+                        AppImages.maldives,
+                        AppStrings.cardTitle1,
+                        AppStrings.address1,
+                        4.6,
+                        context,
+                      ),
+
+                      popularDestinationCard(
+                        AppImages.erinFalls,
+                        AppStrings.cardTitle2,
+                        AppStrings.address2,
+                        3,
+                        context,
+                      ),
+
+                      popularDestinationCard(
+                        AppImages.maldives,
+                        AppStrings.cardTitle1,
+                        AppStrings.address1,
+                        4.6,
+                        context,
                       ),
                     ],
                   ),

@@ -43,6 +43,16 @@ class AppStrings {
     {'city': 'Sydney', 'image': AppImages.sydney},
     {'city': 'Toronto', 'image': AppImages.toronto},
     {'city': 'London', 'image': AppImages.london},
+    {'city': 'Abuja', 'image': AppImages.abuja},
+    {'city': 'NewYork', 'image': AppImages.newYork},
+    {'city': 'Sydney', 'image': AppImages.sydney},
+    {'city': 'Toronto', 'image': AppImages.toronto},
+    {'city': 'London', 'image': AppImages.london},
+    {'city': 'Abuja', 'image': AppImages.abuja},
+    {'city': 'NewYork', 'image': AppImages.newYork},
+    {'city': 'Sydney', 'image': AppImages.sydney},
+    {'city': 'Toronto', 'image': AppImages.toronto},
+    {'city': 'London', 'image': AppImages.london},
   ];
 
   /// card strings
@@ -68,5 +78,9 @@ class AppStrings {
   static const String duration = 'Duration';
   static const String ratingDetails = 'RATING';
   static const String overview = 'Overview';
+  static const String rate = '\$85/Day';
+  static const String stay = '3 Days';
+  static const String starts = '5.0';
+  static const String reviews = '(2.9k Reviews)';
 
 }
