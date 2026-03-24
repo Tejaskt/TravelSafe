@@ -2,34 +2,36 @@ class AppImages {
 
   AppImages._();
 
+  static const String image = 'assets/images';
+
   // Splash Screen
-  static const String background = 'assets/images/backgroundimg.jpg';
-  static const String location = 'assets/images/location.png';
+  static const String background = '$image/backgroundimg.jpg';
+  static const String location = '$image/location.png';
 
   // Onboarding Screen
-  static const String onboardingImg1 = 'assets/images/onboardImg1.png';
-  static const String onboardingImg2 = 'assets/images/onboardImg2.png';
-  static const String onboardingImg3 = 'assets/images/onboardImg3.png';
-  static const String img4 = 'assets/images/txt_background.png';
+  static const String onboardingImg1 = '$image/onboardImg1.png';
+  static const String onboardingImg2 = '$image/onboardImg2.png';
+  static const String onboardingImg3 = '$image/onboardImg3.png';
+  static const String img4 = '$image/txt_background.png';
 
   // Home Screen
-  static const String avatar = 'assets/images/avatar.png';
-  static const String abuja = 'assets/images/abuja100.png';
-  static const String newYork = 'assets/images/newyork100.png';
-  static const String sydney = 'assets/images/sydney100.png';
-  static const String toronto = 'assets/images/toronto100.png';
-  static const String london = 'assets/images/london100.png';
-  static const String maldives = 'assets/images/editedmaldives.png';
-  static const String erinFalls = 'assets/images/editedfalls.png';
-  static const String beach = 'assets/images/beach.png';
-  static const String mountain = 'assets/images/mountain.png';
-  static const String bell = 'assets/images/icon_bell.png';
-  static const String filter = 'assets/images/icon_filter.png';
-  static const String setting = 'assets/images/setting.png';
-  static const String arrowIcon = 'assets/images/arrowicon.svg';
+  static const String avatar = '$image/avatar.png';
+  static const String abuja = '$image/abuja100.png';
+  static const String newYork = '$image/newyork100.png';
+  static const String sydney = '$image/sydney100.png';
+  static const String toronto = '$image/toronto100.png';
+  static const String london = '$image/london100.png';
+  static const String maldives = '$image/editedmaldives.png';
+  static const String erinFalls = '$image/editedfalls.png';
+  static const String beach = '$image/beach.png';
+  static const String mountain = '$image/mountain.png';
+  static const String bell = '$image/icon_bell.png';
+  static const String filter = '$image/icon_filter.png';
+  static const String setting = '$image/setting.png';
+  static const String arrowIcon = '$image/arrowicon.svg';
 
   // Details Screen
-  static const String maldivesDetails = 'assets/images/maldivesDetails.png';
-  static const String clockIcon ='assets/images/clockIcon.png';
-  static const String ratingIcon ='assets/images/ratingIcon.png';
+  static const String maldivesDetails = '$image/maldivesDetails.png';
+  static const String clockIcon ='$image/clockIcon.png';
+  static const String ratingIcon ='$image/ratingIcon.png';
 }

@@ -21,7 +21,6 @@ class BookingScreen extends StatelessWidget {
         top: false,
         child: Stack(
           children: [
-
             // Top Image
             SizedBox(
               width: .infinity,
