@@ -63,13 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
       backgroundColor: AppColors.white,
 
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: ResponsiveHelpers.screenPadding(context),
+      body: SafeArea(
+        child: Padding(
+          padding: ResponsiveHelpers.screenPadding(context),
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: .start,
               children: [
+                // top row
                 Row(
                   children: [
                     CircleAvatar(backgroundImage: AssetImage(AppImages.avatar)),
@@ -107,15 +108,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CircleAvatar(
                             maxRadius: 8,
                             backgroundColor: AppColors.primary,
-                            child: Text('5',style:
-                              TextStyle(
+                            child: Text(
+                              '5',
+                              style: TextStyle(
                                 color: AppColors.white,
                                 fontFamily: 'Lato',
-                                fontSize: 10
-                              ),),
+                                fontSize: 10,
+                              ),
+                            ),
                           ),
                         ),
-
                       ],
                     ),
                   ],
@@ -123,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: h(10)),
 
+                // top heading
                 Text(
                   AppStrings.heading1,
                   style: TextStyle(
@@ -145,6 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: h(20)),
 
+                // search bar
                 IntrinsicHeight(
                   child: Row(
                     crossAxisAlignment: .stretch,
@@ -179,6 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: h(16)),
 
+                // Rounded City view
                 SizedBox(
                   height: sp(100),
                   child: ListView.builder(
@@ -191,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: h(10)),
 
+                // popular Heading
                 Row(
                   children: [
                     smallHeadings(AppStrings.popularDestination, context),
@@ -208,6 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: h(14)),
 
+                // Destination Cards
                 SingleChildScrollView(
                   scrollDirection: .horizontal,
                   child: Row(
@@ -259,44 +266,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         4.6,
                         context,
                       ),
-
-                      popularDestinationCard(
-                        AppImages.erinFalls,
-                        AppStrings.cardTitle2,
-                        AppStrings.address2,
-                        3,
-                        context,
-                      ),
-
-                      popularDestinationCard(
-                        AppImages.maldives,
-                        AppStrings.cardTitle1,
-                        AppStrings.address1,
-                        4.6,
-                        context,
-                      ),
-
-                      popularDestinationCard(
-                        AppImages.erinFalls,
-                        AppStrings.cardTitle2,
-                        AppStrings.address2,
-                        3,
-                        context,
-                      ),
-
-                      popularDestinationCard(
-                        AppImages.maldives,
-                        AppStrings.cardTitle1,
-                        AppStrings.address1,
-                        4.6,
-                        context,
-                      ),
                     ],
                   ),
                 ),
 
                 SizedBox(height: h(35)),
 
+                // category Heading
                 Row(
                   children: [
                     smallHeadings(AppStrings.category, context),
@@ -314,6 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: h(24)),
 
+                // category row
                 Row(
                   mainAxisAlignment: .spaceAround,
                   children: [
@@ -321,6 +298,65 @@ class _HomeScreenState extends State<HomeScreen> {
                     categoryView(AppImages.mountain, AppStrings.mountain),
                   ],
                 ),
+
+                SizedBox(height: h(35)),
+
+                // category Heading
+                Row(
+                  children: [
+                    smallHeadings(AppStrings.category, context),
+                    Spacer(),
+                    Text(
+                      AppStrings.seeAll,
+                      style: TextStyle(
+                        fontFamily: 'Lato',
+                        color: AppColors.blue,
+                        fontSize: sp(14),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: h(24)),
+
+                // category row
+                Row(
+                  mainAxisAlignment: .spaceAround,
+                  children: [
+                    categoryView(AppImages.beach, AppStrings.beach),
+                    categoryView(AppImages.mountain, AppStrings.mountain),
+                  ],
+                ),
+
+                SizedBox(height: h(35)),
+
+                // category Heading
+                Row(
+                  children: [
+                    smallHeadings(AppStrings.category, context),
+                    Spacer(),
+                    Text(
+                      AppStrings.seeAll,
+                      style: TextStyle(
+                        fontFamily: 'Lato',
+                        color: AppColors.blue,
+                        fontSize: sp(14),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: h(24)),
+
+                // category row
+                Row(
+                  mainAxisAlignment: .spaceAround,
+                  children: [
+                    categoryView(AppImages.beach, AppStrings.beach),
+                    categoryView(AppImages.mountain, AppStrings.mountain),
+                  ],
+                ),
+
               ],
             ),
           ),
