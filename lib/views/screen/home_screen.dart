@@ -29,7 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
     double h(double px) => ResponsiveHelpers.h(context, px);
     double sp(double px) => ResponsiveHelpers.sp(context, px);
 
+    // Height of the two heading texts — tweak if your font renders taller/shorter
+    final double headingsHeight = h(70);
+
+    // Height of the search bar row — tweak to match your actual render height
+    final double searchBarHeight = h(56);
+
     return Scaffold(
+      // ── Bottom Navigation Bar ─────────────────────────────────────────────
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: IconThemeData(color: AppColors.primary),
         unselectedIconTheme: IconThemeData(color: AppColors.black),
@@ -63,28 +70,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
       backgroundColor: AppColors.white,
 
+      // ── Body ──────────────────────────────────────────────────────────────
       body: SafeArea(
-        child: Padding(
-          padding: ResponsiveHelpers.screenPadding(context),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: .start,
-              children: [
-                // top row
-                Row(
-                  children: [
-                    CircleAvatar(backgroundImage: AssetImage(AppImages.avatar)),
-                    SizedBox(width: w(8)),
+        child: CustomScrollView(
+          slivers: [
+            // ────────────────────────────────────────────────────────────────
+            // SLIVER 1 — Pinned top row  +  collapsible / fading headings
+            //  • title        → always pinned (avatar, name, settings, bell)
+            //  • flexibleSpace → the two heading Texts fade out on scroll
+            // ────────────────────────────────────────────────────────────────
+            SliverAppBar(
+              backgroundColor: AppColors.white,
+              surfaceTintColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              elevation: 0,
+              pinned: true,
+              automaticallyImplyLeading: false,
+              // Extra space below the toolbar for the headings
+              expandedHeight: kToolbarHeight + headingsHeight,
+              titleSpacing: 0,
 
+              // ── Always-visible top row ───────────────────────────────────
+              title: Padding(
+                padding: ResponsiveHelpers.screenPadding(context)
+                    .copyWith(top: 0, bottom: 0),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                        backgroundImage: AssetImage(AppImages.avatar)),
+                    SizedBox(width: w(8)),
                     Text(
                       AppStrings.userName,
-                      style: TextStyle(fontFamily: 'Lato', fontSize: sp(18)),
+                      style: TextStyle(
+                          fontFamily: 'Lato', fontSize: sp(18)),
                     ),
+                    const Spacer(),
 
-                    Spacer(),
-
+                    // Settings
                     Card(
-                      shape: CircleBorder(),
+                      shape: const CircleBorder(),
                       color: AppColors.white,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -92,17 +116,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
 
+                    // Bell with badge
                     Stack(
                       children: [
                         Card(
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           color: AppColors.white,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Image.asset(AppImages.bell),
                           ),
                         ),
-
                         Positioned(
                           right: 0,
                           child: CircleAvatar(
@@ -122,263 +146,303 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+              ),
 
-                SizedBox(height: h(10)),
+              // ── Collapsible headings — fade out while scrolling ──────────
+              flexibleSpace: LayoutBuilder(
+                builder: (context, constraints) {
+                  // t = 0.0 when fully expanded, 1.0 when fully collapsed
+                  final double expandedHeight =
+                      kToolbarHeight + headingsHeight;
+                  final double t = ((expandedHeight - constraints.maxHeight) /
+                      headingsHeight)
+                      .clamp(0.0, 1.0);
 
-                // top heading
-                Text(
-                  AppStrings.heading1,
-                  style: TextStyle(
-                    fontFamily: 'Lato',
-                    fontSize: sp(24),
-                    fontWeight: .w600,
-                    color: AppColors.black,
-                  ),
-                ),
+                  // Fade starts immediately, fully gone at t == 0.75
+                  final double opacity = (1.0 - (t / 0.75)).clamp(0.0, 1.0);
 
-                Text(
-                  AppStrings.heading2,
-                  style: TextStyle(
-                    fontFamily: 'Lato',
-                    fontSize: sp(24),
-                    fontWeight: .w600,
-                    color: AppColors.orange,
-                  ),
-                ),
-
-                SizedBox(height: h(20)),
-
-                // search bar
-                IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: .stretch,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            isDense: true,
-                            prefixIcon: Icon(Icons.search_rounded),
-                            hintText: AppStrings.search,
-                            border: OutlineInputBorder(
-                              borderRadius: .circular(50),
-                            ),
+                  return FlexibleSpaceBar(
+                    collapseMode: CollapseMode.none,
+                    background: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Opacity(
+                        opacity: opacity,
+                        child: Padding(
+                          padding:
+                          ResponsiveHelpers.screenPadding(context)
+                              .copyWith(top: 0, bottom: h(8)),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppStrings.heading1,
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: sp(24),
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black,
+                                ),
+                              ),
+                              Text(
+                                AppStrings.heading2,
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: sp(24),
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.orange,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
+                    ),
+                  );
+                },
+              ),
+            ),
 
-                      SizedBox(width: w(20)),
+            // ────────────────────────────────────────────────────────────────
+            // SLIVER 2 — Sticky search bar
+            //
+            //  Sticks directly below the SliverAppBar toolbar once the
+            //  headings have scrolled away.
+            // ────────────────────────────────────────────────────────────────
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _SearchBarDelegate(
+                height: searchBarHeight, // bar + top/bottom padding
+                child: Container(
+                  color: AppColors.white,
+                  padding: ResponsiveHelpers.screenPadding(context)
+                      .copyWith(top: h(8), bottom: h(8)),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              isDense: true,
+                              prefixIcon:
+                              const Icon(Icons.search_rounded),
+                              hintText: AppStrings.search,
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.circular(50),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: w(20)),
+                        Card(
+                          shape: const CircleBorder(),
+                          color: AppColors.white,
+                          child: Image.asset(AppImages.filter),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
 
-                      Card(
-                        shape: CircleBorder(),
-                        color: AppColors.white,
-                        child: Image.asset(AppImages.filter),
+            // ────────────────────────────────────────────────────────────────
+            // SLIVER 3 — All scrollable content
+            // ────────────────────────────────────────────────────────────────
+            SliverPadding(
+              padding: ResponsiveHelpers.screenPadding(context)
+                  .copyWith(top: h(16), bottom: h(20)),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  // ── Where to Visit ──────────────────────────────────────
+                  smallHeadings(AppStrings.visit, context),
+
+                  SizedBox(height: h(16)),
+
+                  SizedBox(
+                    height: sp(100),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: AppStrings.cityName.length,
+                      itemBuilder: (context, index) =>
+                          cityView(AppStrings.cityName[index], context),
+                    ),
+                  ),
+
+                  SizedBox(height: h(10)),
+
+                  // ── Popular Destinations ─────────────────────────────────
+                  Row(
+                    children: [
+                      smallHeadings(
+                          AppStrings.popularDestination, context),
+                      const Spacer(),
+                      Text(
+                        AppStrings.seeAll,
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          color: AppColors.blue,
+                          fontSize: sp(14),
+                        ),
                       ),
                     ],
                   ),
-                ),
 
-                SizedBox(height: h(16)),
+                  SizedBox(height: h(14)),
 
-                smallHeadings(AppStrings.visit, context),
-
-                SizedBox(height: h(16)),
-
-                // Rounded City view
-                SizedBox(
-                  height: sp(100),
-                  child: ListView.builder(
-                    scrollDirection: .horizontal,
-                    itemCount: AppStrings.cityName.length,
-                    itemBuilder: (context, index) =>
-                        cityView(AppStrings.cityName[index], context),
-                  ),
-                ),
-
-                SizedBox(height: h(10)),
-
-                // popular Heading
-                Row(
-                  children: [
-                    smallHeadings(AppStrings.popularDestination, context),
-                    Spacer(),
-                    Text(
-                      AppStrings.seeAll,
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        color: AppColors.blue,
-                        fontSize: sp(14),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: h(14)),
-
-                // Destination Cards
-                SingleChildScrollView(
-                  scrollDirection: .horizontal,
-                  child: Row(
-                    spacing: w(12),
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => BookingScreen(
-                                name: 'The Nautilus \nMaldives',
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => BookingScreen(
+                                  name: 'The Nautilus \nMaldives',
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        child: popularDestinationCard(
+                            );
+                          },
+                          child: popularDestinationCard(
+                            AppImages.maldives,
+                            AppStrings.cardTitle1,
+                            AppStrings.address1,
+                            4.6,
+                            context,
+                          ),
+                        ),
+                        SizedBox(width: w(12)),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => BookingScreen(
+                                    name: AppStrings.cardTitle2),
+                              ),
+                            );
+                          },
+                          child: popularDestinationCard(
+                            AppImages.erinFalls,
+                            AppStrings.cardTitle2,
+                            AppStrings.address2,
+                            3,
+                            context,
+                          ),
+                        ),
+                        SizedBox(width: w(12)),
+                        popularDestinationCard(
                           AppImages.maldives,
                           AppStrings.cardTitle1,
                           AppStrings.address1,
                           4.6,
                           context,
                         ),
-                      ),
-
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  BookingScreen(name: AppStrings.cardTitle2),
-                            ),
-                          );
-                        },
-                        child: popularDestinationCard(
-                          AppImages.erinFalls,
-                          AppStrings.cardTitle2,
-                          AppStrings.address2,
-                          3,
-                          context,
-                        ),
-                      ),
-
-                      popularDestinationCard(
-                        AppImages.maldives,
-                        AppStrings.cardTitle1,
-                        AppStrings.address1,
-                        4.6,
-                        context,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                SizedBox(height: h(35)),
+                  SizedBox(height: h(35)),
 
-                // category Heading
-                Row(
-                  children: [
-                    smallHeadings(AppStrings.category, context),
-                    Spacer(),
-                    Text(
-                      AppStrings.seeAll,
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        color: AppColors.blue,
-                        fontSize: sp(14),
-                      ),
-                    ),
-                  ],
-                ),
+                  // ── Category section 1 ───────────────────────────────────
+                  _categorySection(context, sp),
 
-                SizedBox(height: h(24)),
+                  SizedBox(height: h(35)),
 
-                // category row
-                Row(
-                  mainAxisAlignment: .spaceAround,
-                  children: [
-                    categoryView(AppImages.beach, AppStrings.beach),
-                    categoryView(AppImages.mountain, AppStrings.mountain),
-                  ],
-                ),
+                  // ── Category section 2 ───────────────────────────────────
+                  _categorySection(context, sp),
 
-                SizedBox(height: h(35)),
+                  SizedBox(height: h(35)),
 
-                // category Heading
-                Row(
-                  children: [
-                    smallHeadings(AppStrings.category, context),
-                    Spacer(),
-                    Text(
-                      AppStrings.seeAll,
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        color: AppColors.blue,
-                        fontSize: sp(14),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: h(24)),
-
-                // category row
-                Row(
-                  mainAxisAlignment: .spaceAround,
-                  children: [
-                    categoryView(AppImages.beach, AppStrings.beach),
-                    categoryView(AppImages.mountain, AppStrings.mountain),
-                  ],
-                ),
-
-                SizedBox(height: h(35)),
-
-                // category Heading
-                Row(
-                  children: [
-                    smallHeadings(AppStrings.category, context),
-                    Spacer(),
-                    Text(
-                      AppStrings.seeAll,
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        color: AppColors.blue,
-                        fontSize: sp(14),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: h(24)),
-
-                // category row
-                Row(
-                  mainAxisAlignment: .spaceAround,
-                  children: [
-                    categoryView(AppImages.beach, AppStrings.beach),
-                    categoryView(AppImages.mountain, AppStrings.mountain),
-                  ],
-                ),
-
-              ],
+                  // ── Category section 3 ───────────────────────────────────
+                  _categorySection(context, sp),
+                ]),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
+
+  // Helper to avoid repeating the category block three times
+  Widget _categorySection(BuildContext context, double Function(double) sp) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            smallHeadings(AppStrings.category, context),
+            const Spacer(),
+            Text(
+              AppStrings.seeAll,
+              style: TextStyle(
+                fontFamily: 'Lato',
+                color: AppColors.blue,
+                fontSize: sp(14),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: ResponsiveHelpers.h(context, 24)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            categoryView(AppImages.beach, AppStrings.beach),
+            categoryView(AppImages.mountain, AppStrings.mountain),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Sticky search-bar delegate
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+  final double height;
+
+  const _SearchBarDelegate({required this.child, required this.height});
+
+  @override
+  double get minExtent => height;
+
+  @override
+  double get maxExtent => height;
+
+  @override
+  Widget build(
+      BuildContext context,
+      double shrinkOffset,
+      bool overlapsContent,
+      ) =>
+      child;
+
+  @override
+  bool shouldRebuild(_SearchBarDelegate old) =>
+      old.height != height || old.child != child;
 }
 
 Widget popularDestinationCard(
-  String img,
-  String title,
-  String location,
-  double rating,
-  BuildContext context,
-) {
+    String img,
+    String title,
+    String location,
+    double rating,
+    BuildContext context,
+    ) {
   return Container(
     height: ResponsiveHelpers.h(context, 200),
     width: ResponsiveHelpers.w(context, 200),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30),
-      image: DecorationImage(image: AssetImage(img), fit: .cover),
+      image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
     ),
     child: Stack(
       children: [
@@ -389,7 +453,7 @@ Widget popularDestinationCard(
           child: SvgPicture.asset(AppImages.arrowIcon),
         ),
 
-        // bottom text  + rating
+        // bottom text + rating
         Positioned(
           bottom: 10,
           left: 20,
@@ -399,10 +463,9 @@ Widget popularDestinationCard(
               color: Colors.black.withValues(alpha: 0.4),
               borderRadius: BorderRadius.circular(30),
             ),
-            padding: EdgeInsets.only(left: 14, top: 4, bottom: 4),
+            padding: const EdgeInsets.only(left: 14, top: 4, bottom: 4),
             child: Column(
-              spacing: 1,
-              crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Title
                 Text(
@@ -441,7 +504,9 @@ Widget popularDestinationCard(
                   children: [
                     ...List.generate(5, (index) {
                       return Icon(
-                        index < rating.floor() ? Icons.star : Icons.star_border,
+                        index < rating.floor()
+                            ? Icons.star
+                            : Icons.star_border,
                         color: Colors.amber,
                         size: 12,
                       );
@@ -452,7 +517,7 @@ Widget popularDestinationCard(
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10.sp,
-                        fontWeight: .w600,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
@@ -469,8 +534,8 @@ Widget popularDestinationCard(
 Widget categoryView(String img, String name) {
   return Container(
     decoration: BoxDecoration(
-      border: .all(color: AppColors.primary),
-      borderRadius: .circular(50),
+      border: Border.all(color: AppColors.primary),
+      borderRadius: BorderRadius.circular(50),
     ),
     child: Padding(
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8.w),
@@ -481,7 +546,7 @@ Widget categoryView(String img, String name) {
             name,
             style: TextStyle(
               fontFamily: 'Lato',
-              fontWeight: .w600,
+              fontWeight: FontWeight.w600,
               fontSize: 16.sp,
             ),
           ),
@@ -496,7 +561,7 @@ Widget smallHeadings(String txt, BuildContext context) {
     txt,
     style: TextStyle(
       fontFamily: 'Lato',
-      fontWeight: .w600,
+      fontWeight: FontWeight.w600,
       fontSize: ResponsiveHelpers.sp(context, 18),
     ),
   );
@@ -504,7 +569,7 @@ Widget smallHeadings(String txt, BuildContext context) {
 
 Widget cityView(Map<String, String> value, BuildContext context) {
   return Column(
-    mainAxisAlignment: .center,
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Container(
         height: ResponsiveHelpers.sp(context, 65),
@@ -512,9 +577,9 @@ Widget cityView(Map<String, String> value, BuildContext context) {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(value['image']!),
-            fit: .fill,
+            fit: BoxFit.fill,
           ),
-          shape: .circle,
+          shape: BoxShape.circle,
         ),
       ),
       Text(
