@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:travel_safe/core/constants/app_colors.dart';
 import 'package:travel_safe/core/constants/app_images.dart';
 import 'package:travel_safe/core/constants/app_strings.dart';
 import '../../core/helpers/responsive_helpers.dart';
 
-class BookingScreen extends StatelessWidget {
+class BookingScreen extends StatefulWidget {
   final String name;
 
   const BookingScreen({super.key, required this.name});
+
+  @override
+  State<BookingScreen> createState() => _BookingScreenState();
+}
+
+class _BookingScreenState extends State<BookingScreen> {
+
+  bool _isMoreDetailsClicked = false;
+
+  final days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,30 +36,37 @@ class BookingScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: SafeArea(
-        top: false,
-        child: Stack(
-          children: [
-            // Top Image
-            SizedBox(
-              width: .infinity,
-              child: Image.asset(AppImages.maldivesDetails, fit: .cover),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back_ios_new),
             ),
+            expandedHeight: ResponsiveHelpers.h(context, 400),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Image.asset(
+                AppImages.maldivesDetails,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
 
-            // Bottom Description box
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SingleChildScrollView(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(36),
-                      topRight: Radius.circular(36),
-                    ),
-                    color: AppColors.white,
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(36),
+                    topRight: Radius.circular(36),
                   ),
-                  child: Padding(
-                    padding: ResponsiveHelpers.screenPadding(context),
+                  color: AppColors.white,
+                ),
+                child: Padding(
+                  padding: ResponsiveHelpers.screenPadding(context),
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: .start,
                       spacing: sp(10),
@@ -48,7 +74,7 @@ class BookingScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              name,
+                              widget.name,
                               style: TextStyle(
                                 fontFamily: 'Lato',
                                 fontWeight: .w600,
@@ -188,7 +214,12 @@ class BookingScreen extends StatelessWidget {
                           child: SizedBox(
                             width: w(160),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  _isMoreDetailsClicked =
+                                  !_isMoreDetailsClicked;
+                                });
+                              },
                               style: ElevatedButton.styleFrom(
                                 side: BorderSide(
                                   color: AppColors.primary,
@@ -198,7 +229,9 @@ class BookingScreen extends StatelessWidget {
                                 backgroundColor: AppColors.white,
                               ),
                               child: Text(
-                                AppStrings.moreDetails,
+                                !_isMoreDetailsClicked
+                                    ? AppStrings.moreDetails
+                                    : 'Less Details',
                                 style: TextStyle(
                                   color: AppColors.primary,
                                   fontSize: sp(16),
@@ -212,21 +245,164 @@ class BookingScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
 
-            Positioned(
-              top: h(20),
-              left: w(8),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back_ios_new),
-              ),
-            ),
-          ],
-        ),
+              if (_isMoreDetailsClicked)
+                Padding(
+                  padding: ResponsiveHelpers.screenPadding(context).copyWith(
+                      top: 0
+                  ),
+                  child: Column(
+                    mainAxisAlignment: .center,
+                    children: [
+
+                      divider(),
+
+                      Text(
+                        AppStrings.details,
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: sp(18),
+                        ),
+                      ),
+
+                      divider(),
+
+                      // address lines
+                      address(Icons.location_on_outlined, AppStrings.address1),
+                      address(Icons.map,AppStrings.website),
+
+                      divider(),
+
+                      Row(
+                        spacing: w(8),
+                        children: [
+                          Icon(
+                            Icons.watch_later_outlined,
+                            color: AppColors.primary,
+                          ),
+                          Text(
+                            'Opening Hours',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              color: AppColors.black,
+                              fontWeight: .w500,
+                              fontSize: sp(18),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: h(8)),
+
+                      // Days
+                      Column(
+                        children: days.map((day) => daysRow(day)).toList(),
+                      ),
+
+                      divider(),
+
+                      /*
+                      Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          Text(
+                            'Check in',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              color: AppColors.black,
+                              fontSize: sp(16),
+                            ),
+                          ),
+
+                          Text(
+                            'Check out',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              color: AppColors.black,
+                              fontSize: sp(16),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                border: BoxBorder.all(
+                                  color: AppColors.primary,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Text('Feb 06 ▼ Mon ▼'),
+                            ),
+
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              border: BoxBorder.all(
+                                color: AppColors.primary,
+                                width: 1,
+                              ),
+                            ),
+                            child: Text('Feb 09 ▼ Wed ▼'),
+                          ),
+                        ],
+                      ),
+
+                       */
+                    ],
+                  ),
+                ),
+            ]),
+          ),
+        ],
       ),
     );
   }
+}
+
+
+Widget address(IconData icon, String address){
+  return Row(
+    spacing: 8,
+    children: [
+      Icon(
+        icon,
+        color: AppColors.primary,
+      ),
+      Text(
+        address,
+        style: TextStyle(
+          fontFamily: 'Lato',
+          color: AppColors.grey,
+          fontSize: 16.sp,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget divider(){
+  return Divider(color: AppColors.black);
+}
+
+Widget daysRow(String day) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        day,
+        style: TextStyle(fontFamily: 'Lato', fontSize: 16.sp),
+      ),
+      Text(
+        '24 Hours',
+        style: TextStyle(fontFamily: 'Lato', fontSize: 16.sp),
+      ),
+    ],
+  );
 }

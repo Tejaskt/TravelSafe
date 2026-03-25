@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final double searchBarHeight = h(56);
 
     return Scaffold(
-      // ── Bottom Navigation Bar ─────────────────────────────────────────────
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: IconThemeData(color: AppColors.primary),
         unselectedIconTheme: IconThemeData(color: AppColors.black),
@@ -67,18 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-
       backgroundColor: AppColors.white,
-
-      // ── Body ──────────────────────────────────────────────────────────────
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            // ────────────────────────────────────────────────────────────────
             // SLIVER 1 — Pinned top row  +  collapsible / fading headings
             //  • title        → always pinned (avatar, name, settings, bell)
             //  • flexibleSpace → the two heading Texts fade out on scroll
-            // ────────────────────────────────────────────────────────────────
             SliverAppBar(
               backgroundColor: AppColors.white,
               surfaceTintColor: Colors.transparent,
@@ -203,16 +197,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // ────────────────────────────────────────────────────────────────
             // SLIVER 2 — Sticky search bar
-            //
-            //  Sticks directly below the SliverAppBar toolbar once the
-            //  headings have scrolled away.
-            // ────────────────────────────────────────────────────────────────
             SliverPersistentHeader(
               pinned: true,
               delegate: _SearchBarDelegate(
-                height: searchBarHeight, // bar + top/bottom padding
+                height: searchBarHeight , // bar + top/bottom padding
                 child: Container(
                   color: AppColors.white,
                   padding: ResponsiveHelpers.screenPadding(context)
@@ -248,15 +237,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // ────────────────────────────────────────────────────────────────
             // SLIVER 3 — All scrollable content
-            // ────────────────────────────────────────────────────────────────
             SliverPadding(
               padding: ResponsiveHelpers.screenPadding(context)
                   .copyWith(top: h(16), bottom: h(20)),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
-                  // ── Where to Visit ──────────────────────────────────────
+                  // ── Where to Visit
                   smallHeadings(AppStrings.visit, context),
 
                   SizedBox(height: h(16)),
@@ -273,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   SizedBox(height: h(10)),
 
-                  // ── Popular Destinations ─────────────────────────────────
+                  // ── Popular Destinations
                   Row(
                     children: [
                       smallHeadings(
@@ -301,9 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => BookingScreen(
-                                  name: 'The Nautilus \nMaldives',
-                                ),
+                                builder: (_) => BookingScreen(name: 'The Nautilus \nMaldives'),
                               ),
                             );
                           },
@@ -348,17 +333,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   SizedBox(height: h(35)),
 
-                  // ── Category section 1 ───────────────────────────────────
+                  // ── Category section 1
                   _categorySection(context, sp),
 
                   SizedBox(height: h(35)),
 
-                  // ── Category section 2 ───────────────────────────────────
+                  // ── Category section 2
                   _categorySection(context, sp),
 
                   SizedBox(height: h(35)),
 
-                  // ── Category section 3 ───────────────────────────────────
+                  // ── Category section 3
                   _categorySection(context, sp),
                 ]),
               ),
@@ -401,10 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Sticky search-bar delegate
-// ─────────────────────────────────────────────────────────────────────────────
-
 class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
   final double height;

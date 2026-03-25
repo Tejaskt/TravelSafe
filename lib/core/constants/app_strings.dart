@@ -72,7 +72,7 @@ class AppStrings {
   static const String profile = 'Profile';
   
   // Details Screen
-  static const String maldivesDetails = 'The Nautilus is a privately-owned luxury resort in the Baa atoll UNESCO biosphere reserve, near Hanifaru Bay where you can swim with manta rays in season. This natural island has its own outstanding coral reef just metres from its beaches.';
+  static const String maldivesDetails = 'The Nautilus is a privately-owned luxury resort in the Baa atoll UNESCO biosphere reserve, near Hanifa Bay where you can swim with manta rays in season. This natural island has its own outstanding coral reef just metres from its beaches.';
   static const String bookNow = 'Book Now';
   static const String moreDetails = 'More Details';
   static const String duration = 'Duration';
@@ -82,5 +82,7 @@ class AppStrings {
   static const String stay = '3 Days';
   static const String starts = '5.0';
   static const String reviews = '(2.9k Reviews)';
+  static const String details = 'Details';
+  static const String website = 'Visit Website';
 
 }
